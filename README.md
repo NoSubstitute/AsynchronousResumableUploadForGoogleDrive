@@ -14,7 +14,7 @@ This is a sample script for uploading multiple files with large size (> 50 MB) i
 
 <a name="demo"></a>
 
-# Demo - the demo is shown using a Google Sheet - just check the action in the sidebar - as this fork doesn'ät run inside a Google Sheet.
+# Demo - the demo is shown using a Google Sheet - just check the action in the sidebar - as this fork doesn't run inside a Google Sheet.
 
 ![](images/demo.gif)
 
