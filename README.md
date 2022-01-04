@@ -1,4 +1,5 @@
-# Resumable Upload of Multiple Files with Asynchronous Process for Google Drive
+# Resumable Upload of Multiple Files with Asynchronous Process for Google Drive - as web app
+( Idea completely thought out by [Tanaike](https://tanaikech.github.io/about/) - I just edited it a little to suit my needs, after Tanaike told me how.)
 
 [![Build Status](https://travis-ci.org/tanaikech/AsynchronousResumableUploadForGoogleDrive.svg?branch=master)](https://travis-ci.org/tanaikech/AsynchronousResumableUploadForGoogleDrive)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENCE)
@@ -9,11 +10,11 @@
 
 # Overview
 
-This is a sample script for uploading multiple files with large size (> 50 MB) at the sidebar, dialog of Google Docs and Web Apps using the resumable upload of the asynchronous process with Javascript and Google Apps Script (GAS).
+This is a sample script for uploading multiple files with large size (> 50 MB) in a Web App using the resumable upload of the asynchronous process with Javascript and Google Apps Script (GAS).
 
 <a name="demo"></a>
 
-# Demo
+# Demo - the demo is shown using a Google Sheet - just check the action in the sidebar - as this fork doesn'ät run inside a Google Sheet.
 
 ![](images/demo.gif)
 
@@ -31,11 +32,11 @@ If this was useful for you, I'm glad.
 
 Here, there are 2 scripts for Google Apps Script and Javascript. In order to use these sample scripts, please do the following flow. In this sample, the Javascript library of [ResumableUploadForGoogleDrive_js](https://github.com/tanaikech/ResumableUploadForGoogleDrive_js) is used.
 
-## 1. Prepare Spreadsheet and script
+## 1. Prepare Spreadsheet and script - this project can now be created completely in [Apps Script Editor](https://script.google.com/), no need for Google Sheets.
 
 Create new Spreadsheet. And open the script editor on the created Spreadsheet.
 
-## 2. Copy and paste sample scripts
+## 2. Copy and paste sample scripts - Don't forget to edit the folderId in index.html (line 36) to point to your upload folder in your Google Drive.
 
 Please copy and paste the following scripts.
 
@@ -44,26 +45,13 @@ Please copy and paste the following scripts.
 ### Google Apps Script: Code.gs
 
 ```javascript
-function main() {
-  var html = HtmlService.createHtmlOutputFromFile("index");
-  SpreadsheetApp.getUi().showSidebar(html);
+function doGet() {
+  return HtmlService.createHtmlOutputFromFile("index.html");
 }
 
 function getAuth() {
   // DriveApp.createFile(blob) // This is used for adding the scope of "https://www.googleapis.com/auth/drive".
   return ScriptApp.getOAuthToken();
-}
-
-// If you want to put the uploaded file information to the active Spreadsheet,
-// please use the following function.
-function putFileInf(obj) {
-  var lock = LockService.getDocumentLock();
-  if (lock.tryLock(5000)) {
-    SpreadsheetApp.getActiveSpreadsheet()
-      .getSheets()[0]
-      .appendRow([obj.name, obj.mimeType, obj.id]);
-    lock.releaseLock();
-  }
 }
 ```
 
@@ -104,7 +92,8 @@ function putFileInf(obj) {
           fileSize: f.fileSize,
           fileType: f.fileType,
           fileBuffer: f.result,
-          accessToken: accessToken
+          accessToken: accessToken,
+         folderId: "**ReplaceThisWithYourFolderId**"
         };
         const ru = new ResumableUploadToGoogleDrive();
         ru.Do(resource, function(res, err) {
@@ -128,7 +117,7 @@ function putFileInf(obj) {
 
           // If you want to put the uploaded file information to the active Spreadsheet,
           // please use the following function.
-          if (res.status == "Done") google.script.run.putFileInf(res.result);
+          // if (res.status == "Done") google.script.run.putFileInf(res.result);
 
           document.getElementById(id).innerText = msg;
         });
@@ -138,7 +127,7 @@ function putFileInf(obj) {
 </script>
 ```
 
-## 3. Run scripts
+## 3. Run scripts - not really - Publish the web app and set it to run as you, and allow anyone you want - you will then be asked to authorise it 
 
 Please run the function of `main` at the script editor. At that time, the authorization screen is opened. So please authorize the scopes. By this, a sidebar is opened on the Spreadsheet.
 
@@ -179,5 +168,9 @@ If you have any questions and commissions for me, feel free to tell me.
 - v1.0.1 (December 27, 2019)
 
   1. The functions for putting the information of uploaded file to the active Spreadsheet were added to [the sample script](#samplescript).
+
+- v1.0.1a (January 4, 2022) / forked by NoSubstitute
+
+  1a. Converted the Sheets sidebar to a web app, since that's what I wanted. All original code and ideas are from Tanaike.
 
 [TOP](#top)
