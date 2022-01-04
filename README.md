@@ -34,7 +34,7 @@ Here, there are 2 scripts for Google Apps Script and Javascript. In order to use
 
 ## 1. Prepare Spreadsheet and script - this project can now be created completely in [Apps Script Editor](https://script.google.com/), no need for Google Sheets.
 
-Create new Spreadsheet. And open the script editor on the created Spreadsheet.
+~~Create new Spreadsheet. And open the script editor on the created Spreadsheet.~~
 
 ## 2. Copy and paste sample scripts - Don't forget to edit the folderId in index.html (line 36) to point to your upload folder in your Google Drive.
 
