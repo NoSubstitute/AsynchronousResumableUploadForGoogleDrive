@@ -129,7 +129,7 @@ function getAuth() {
 
 ## 3. Run scripts - not really - Publish the web app and set it to run as you, and allow anyone you want - you will then be asked to authorise it 
 
-Please run the function of `main` at the script editor. At that time, the authorization screen is opened. So please authorize the scopes. By this, a sidebar is opened on the Spreadsheet.
+~~Please run the function of `main` at the script editor.~~ At that time, the authorization screen is opened. So please authorize the scopes. ~~By this, a sidebar is opened on the Spreadsheet.~~
 
 When your files are selected and you click the upload button, the files are uploaded to your Google Drive.
 
